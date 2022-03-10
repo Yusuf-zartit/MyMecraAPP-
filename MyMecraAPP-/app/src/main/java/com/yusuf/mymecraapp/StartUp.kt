@@ -12,7 +12,7 @@ class StartUp : AppCompatActivity() {
         setContentView(R.layout.activity_start_up)
 
         Handler().postDelayed({
-            val transition = Intent (applicationContext,MainActivity::class.java)
+            val transition = Intent (applicationContext,SignPage::class.java)
             startActivity(transition)
             finish()
         }, 3000)
