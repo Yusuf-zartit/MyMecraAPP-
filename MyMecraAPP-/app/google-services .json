@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "801395997553",
+    "project_id": "mymecraapp-f7dc4",
+    "storage_bucket": "mymecraapp-f7dc4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801395997553:android:cac81c20314c9ed53714d0",
+        "android_client_info": {
+          "package_name": "com.yusuf.mymecraapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "801395997553-83gtu9m9cntjoo95nuhr094eg836i11b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTz-LC-KchfQ_w4IdYd3QdeIVwTwfN-Fo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "801395997553-83gtu9m9cntjoo95nuhr094eg836i11b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
