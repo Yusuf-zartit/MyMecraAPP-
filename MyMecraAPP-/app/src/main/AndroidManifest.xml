@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyMecraAPP">
         <activity
+            android:name=".AnaSayfa"
+            android:exported="false" />
+        <activity
+            android:name=".KayitOlPage"
+            android:exported="false" />
+        <activity
             android:name=".SignPage"
             android:exported="false" />
         <activity

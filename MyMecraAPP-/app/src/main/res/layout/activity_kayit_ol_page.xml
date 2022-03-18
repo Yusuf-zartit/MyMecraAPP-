@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#602D68"
+    tools:context=".KayitOlPage">
+
+    <EditText
+        android:id="@+id/kayitName"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/edittextbackground"
+        android:drawableLeft="@drawable/name"
+        android:ems="13"
+        android:gravity="center"
+        android:hint="Name              "
+        android:inputType="textEmailAddress"
+        android:padding="8dp"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/kayitPassword2"
+        android:layout_width="312dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="49dp"
+        android:background="@drawable/edittextbackground"
+        android:drawableLeft="@drawable/lock_logo"
+        android:ems="13"
+        android:gravity="center"
+        android:hint="Password tekrar Giriniz"
+        android:inputType="textPassword"
+        android:padding="8dp"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kayitPassword1" />
+
+    <EditText
+        android:id="@+id/kayitEmail"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="49dp"
+        android:background="@drawable/edittextbackground"
+        android:drawableLeft="@drawable/user_logo"
+        android:ems="13"
+        android:gravity="center"
+        android:hint="Email Adresinizi Giriniz"
+        android:inputType="textEmailAddress"
+        android:padding="8dp"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kayitName" />
+
+    <EditText
+        android:id="@+id/kayitPassword1"
+        android:layout_width="312dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/edittextbackground"
+        android:drawableLeft="@drawable/lock_logo"
+        android:ems="13"
+        android:gravity="center"
+        android:hint="Password Giriniz"
+        android:inputType="textPassword"
+        android:padding="8dp"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kayitEmail" />
+
+    <Button
+        android:id="@+id/butonkayitOl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="131dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="128dp"
+        android:background="@drawable/btnbackgrnd"
+        android:gravity="center"
+        android:onClick="kayitYap"
+        android:text=" Kayıt Olunuz "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kayitPassword2" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_marginStart="131dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="130dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/sign_logo" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="140dp"
+        android:text="Hesap oluştuma"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
