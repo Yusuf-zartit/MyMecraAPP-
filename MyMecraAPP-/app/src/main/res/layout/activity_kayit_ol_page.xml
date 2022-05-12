@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#602D68"
+    android:background="@color/blue"
     tools:context=".KayitOlPage">
 
     <EditText
@@ -21,7 +21,7 @@
         android:hint="Name              "
         android:inputType="textEmailAddress"
         android:padding="8dp"
-        android:textColorHint="@color/black"
+        android:textColorHint="@color/purple_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -40,7 +40,7 @@
         android:hint="Password tekrar Giriniz"
         android:inputType="textPassword"
         android:padding="8dp"
-        android:textColorHint="@color/black"
+        android:textColorHint="@color/purple_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +60,7 @@
         android:hint="Email Adresinizi Giriniz"
         android:inputType="textEmailAddress"
         android:padding="8dp"
-        android:textColorHint="@color/black"
+        android:textColorHint="@color/purple_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/kayitName" />
@@ -79,7 +79,7 @@
         android:hint="Password Giriniz"
         android:inputType="textPassword"
         android:padding="8dp"
-        android:textColorHint="@color/black"
+        android:textColorHint="@color/purple_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="131dp"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="128dp"
         android:background="@drawable/btnbackgrnd"
         android:gravity="center"
