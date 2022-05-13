@@ -24,8 +24,7 @@ import kotlinx.android.synthetic.main.fragment_add.*
 import androidx.appcompat.widget.AppCompatImageView;
 class AddFragment : Fragment()  {
 
-    var secilenGorsel: Uri? = null
-    var secilenBitmap: Bitmap? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,20 +66,7 @@ class AddFragment : Fragment()  {
 //            }else-> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 //        }
 //    }
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if(requestCode == 1){
 
-                if(grantResults.size > 0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
-                    val galeriIntent = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                    startActivityForResult(galeriIntent,2)
-                }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        }
 
 
 //    val IMAGE_CODE:Int =123
@@ -102,30 +88,5 @@ class AddFragment : Fragment()  {
 //            cursor!!.close()
 //            ivImagePerson.setImageBitmap(BitmapFactory.decodeFile(picturePath))        }
 //    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 2 && requestCode == Activity.RESULT_OK && data != null){
-            secilenGorsel = data.data
-            if(secilenGorsel != null){
-                if (Build.VERSION.SDK_INT >= 28){
-                    val contentResolver = requireActivity().contentResolver
-                    val source = ImageDecoder.createSource(contentResolver,secilenGorsel!!)
-                    secilenBitmap = ImageDecoder.decodeBitmap(source)
-                    ivImage.setImageBitmap(secilenBitmap)
-                }else{
-                    val contentResolver = requireActivity().contentResolver
-                    secilenBitmap =MediaStore.Images.Media.getBitmap(contentResolver,secilenGorsel)
-                    ivImage.setImageBitmap(secilenBitmap)
-                }
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-    fun gorselSec(view: View){
-        if (ContextCompat.checkSelfPermission(fragment_container.context,Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1)
-        }else{
-            val galeriIntent = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(galeriIntent,2)
-        }
-    }
+
 }
