@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyMecraAPP">
         <activity
-            android:name=".AnaSayfa"
+            android:name=".StartUp"
             android:exported="false" />
         <activity
             android:name=".KayitOlPage"
@@ -22,7 +22,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".StartUp"
+            android:name=".AnaSayfa"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -42,18 +42,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
                 android:layout_marginTop="36dp"
-                android:contentDescription="@string/app_name"
                 android:onClick="gorselSec"
                 android:src="@drawable/tweets" />
-
 
 
             <EditText
                 android:id="@+id/etPost"
                 android:layout_width="match_parent"
                 android:layout_height="50pt"
-                android:ems="10"
                 android:layout_marginTop="10dp"
+                android:ems="10"
                 android:hint="Ne düşündüğünü?"
                 android:inputType="textMultiLine" />
 
@@ -75,7 +73,8 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginRight="8dp"
-                    android:background="@drawable/ic_attach_file_black_24dp" />
+                    android:background="@drawable/ic_attach_file_black_24dp"
+                    android:onClick="gorselSec" />
 
                 <ImageView
 
@@ -83,8 +82,8 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginRight="30dp"
-                    android:background="@drawable/ic_send_black_24dp" />
-
+                    android:background="@drawable/ic_send_black_24dp"
+                    android:onClick="paylas" />
 
 
             </LinearLayout>
