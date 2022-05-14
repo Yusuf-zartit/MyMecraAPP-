@@ -2,6 +2,7 @@ package com.yusuf.mymecraapp
 
 import android.Manifest
 import android.app.Activity
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -11,11 +12,13 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.Query
 import com.google.firebase.firestore.FirebaseFirestore
@@ -24,23 +27,28 @@ import com.yusuf.mymecraapp.Fragments.*
 import kotlinx.android.synthetic.main.activity_ana_sayfa.*
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_add.view.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_person.*
+import kotlinx.android.synthetic.main.fragment_person.view.*
+import kotlinx.android.synthetic.main.fragment_search.*
 import java.sql.Timestamp
 import java.time.Instant.now
 import java.util.*
+import kotlin.collections.ArrayList
 
 class AnaSayfa : AppCompatActivity() {
     private lateinit var storage: FirebaseStorage
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseFirestore
-    private val homeFragment = HomeFragment()
     private val searchFragment = SearchFragment()
     private val personFragment = PersonFragment()
+    private val homeFragment = HomeFragment()
     private val notificationsFragment = NotificationsFragment()
     private var addFragment = AddFragment()
     var secilenGorsel: Uri? = null
     var secilenBitmap: Bitmap? = null
-    //var kullaniciEmail:String? = ""
+    var controlImage: Boolean = true
+    var kullaniciEmail:String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +56,9 @@ class AnaSayfa : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
         setContentView(R.layout.activity_ana_sayfa)
-    //    kullaniciEmail = intent.getStringExtra("email") as String
-    //    verilerAl()
+        kullaniciEmail = intent.getStringExtra("email") as String
         replaceFragment(homeFragment)
+
         buttom_nav_bar.setOnItemSelectedListener { id ->
             when (id) {
                 R.id.nav_home -> {
@@ -96,14 +104,21 @@ class AnaSayfa : AppCompatActivity() {
 //                    val contentResolver = requireActivity().contentResolver
                     val source = ImageDecoder.createSource(this.contentResolver, secilenGorsel!!)
                     secilenBitmap = ImageDecoder.decodeBitmap(source)
-                    ivImage.setImageBitmap(secilenBitmap)
-          //          pro_image_profile_frag.setImageBitmap(secilenBitmap)
+                    if (controlImage) {
+                        ivImage.setImageBitmap(secilenBitmap)
+
+                    } else {
+                        pro_image_profile_frag.setImageBitmap(secilenBitmap)
+                    }
                 } else {
-//                    val contentResolver = requireActivity().contentResolver
                     secilenBitmap =
                         MediaStore.Images.Media.getBitmap(this.contentResolver, secilenGorsel)
-                    ivImage.setImageBitmap(secilenBitmap)
-      //              pro_image_profile_frag.setImageBitmap(secilenBitmap)
+                    if (controlImage) {
+                        ivImage.setImageBitmap(secilenBitmap)
+
+                    } else {
+                        pro_image_profile_frag.setImageBitmap(secilenBitmap)
+                    }
                 }
             }
         }
@@ -111,11 +126,17 @@ class AnaSayfa : AppCompatActivity() {
     }
 
     fun gorselSec(view: View) {
+        if (view.id == 2131230983) {//2131230983    add
+            controlImage = true
+        } else if (view.id == 2131231108) {// 2131231108 profile
+            controlImage = false
+        }
         if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.READ_EXTERNAL_STORAGE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+            println(view.toString())
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
@@ -144,7 +165,7 @@ class AnaSayfa : AppCompatActivity() {
 
                     val postHashMap = hashMapOf<String, Any>()
                     postHashMap.put("gorselurl", downlaodUrl)
-     //               kullaniciEmail?.let { postHashMap.put("kullaniciemail", it) }
+                    kullaniciEmail?.let { postHashMap.put("kullaniciemail", it) }
                     postHashMap.put("kullanicitext", kullanicitext)
                     postHashMap.put("tarih", tarih)
 
@@ -175,70 +196,53 @@ class AnaSayfa : AppCompatActivity() {
         }
     }
 
-    fun verilerAl(){
-        database.collection("Post").orderBy("tarih",com.google.firebase.firestore.Query.Direction.DESCENDING).addSnapshotListener { snapshot, exception ->
-            if (exception != null) {
-                Toast.makeText(this, exception.localizedMessage, Toast.LENGTH_LONG).show()
-            } else {
-                if (snapshot != null) {
-                    if (!snapshot.isEmpty) {
-                        val documents = snapshot.documents
-                        for (document in documents) {
-                            val kullanicitext = document.get("kullanicitext") as String
-                            val gorselurl = document.get("gorselurl") as String
-                            val kullaniciemail = document.get("kullaniciemail") as String
-                            val tarih = document.get("tarih") as String
+    fun profile(view: View) {
+        val uuid = UUID.randomUUID()
+        val gorselIsim = "${uuid}.jpg"
+        val gorselReference = storage.reference.child("images").child(gorselIsim)
+        if (secilenGorsel != null) {
+            gorselReference.putFile(secilenGorsel!!).addOnSuccessListener { taskSnapshot ->
+                val yuklenenGorselReference =
+                    FirebaseStorage.getInstance().reference.child("images").child(gorselIsim)
+                yuklenenGorselReference.downloadUrl.addOnSuccessListener { uri ->
+                    val downlaodUrl = uri.toString()
+                    val username = profile_fragment_username.text.toString()
+                    val email = auth.currentUser!!.email.toString()
 
+
+
+                    val postHashMap = hashMapOf<String, Any>()
+                    postHashMap.put("gorselurl", downlaodUrl)
+                    postHashMap.put("username", username)
+                    postHashMap.put("email", email)
+
+                    database.collection("profile").document(email)
+                        .addSnapshotListener { snapshot, exception ->
+                            if (exception != null) {
+                                Toast.makeText(
+                                    applicationContext,
+                                    exception.localizedMessage,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            } else {
+                                if (snapshot != null && snapshot.exists()) {
+
+                                } else {
+                                    println("else")
+                                    database.collection("profile").parent
+                                }
+
+                            }
                         }
-                    }
+                }.addOnFailureListener { exception ->
+                    Toast.makeText(
+                        applicationContext,
+                        exception.localizedMessage,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }
-    }
 
-//    fun profile (view: View){
-//        val uuid = UUID.randomUUID()
-//        val gorselIsim = "${uuid}.jpg"
-//        val gorselReference = storage.reference.child("images").child(gorselIsim)
-//        if (secilenGorsel != null) {
-//            gorselReference.putFile(secilenGorsel!!).addOnSuccessListener { taskSnapshot ->
-//                val yuklenenGorselReference =
-//                    FirebaseStorage.getInstance().reference.child("images").child(gorselIsim)
-//                yuklenenGorselReference.downloadUrl.addOnSuccessListener { uri ->
-//                    val downlaodUrl = uri.toString()
-//                    val fullName = full_name_profile_frag.text.toString()
-//                    val Bio = bio_name_profile_frag.text.toString()
-//
-//                    val postHashMap = hashMapOf<String, Any>()
-//                    postHashMap.put("gorselurl", downlaodUrl)
-//                    postHashMap.put("fullName", fullName)
-//                    postHashMap.put("Bio", Bio)
-//
-//                    database.collection("Profile").add(postHashMap).addOnCompleteListener { task ->
-//                        if (task.isSuccessful) {
-//                            Toast.makeText(
-//                                applicationContext,
-//                                "başarıyla eklendi",
-//                                Toast.LENGTH_LONG
-//                            ).show()
-//                            replaceFragment(homeFragment)
-//                        }
-//                    }.addOnFailureListener { exception ->
-//                        Toast.makeText(
-//                            applicationContext,
-//                            exception.localizedMessage,
-//                            Toast.LENGTH_LONG
-//                        ).show()
-//                    }
-//                }.addOnFailureListener { exception ->
-//                    Toast.makeText(
-//                        applicationContext,
-//                        exception.localizedMessage,
-//                        Toast.LENGTH_LONG
-//                    ).show()
-//                }
-//            }
-//        }
-//
-//    }
+    }
 }
