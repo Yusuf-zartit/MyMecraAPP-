@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.SharedElementCallback
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.yusuf.mymecraapp.R
@@ -19,6 +22,8 @@ import kotlinx.android.synthetic.main.fragment_search.*
 
 class HomeFragment : Fragment() {
     private lateinit var recyclerViewAdapter : RecyclerAdapter
+//    private var layoutManager: RecyclerView.LayoutManager? = null
+//    private var adapter: RecyclerView.Adapter<RecyclerAdapter.PostHolder>? = null
     private lateinit var database: FirebaseFirestore
     var tweetList = ArrayList<Tweet>()
 
@@ -27,18 +32,26 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         database = FirebaseFirestore.getInstance()
-
-        verilerAl()
-        var layoutManager = LinearLayoutManager(context)
-    //    recycler_view_home.layoutManager = layoutManager
-        recyclerViewAdapter = RecyclerAdapter(tweetList)
-     //   recycler_view_home.adapter = recyclerViewAdapter
+        val token = verilerAl()
+        recyclerViewAdapter = RecyclerAdapter(token)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
-
     }
 
-    fun verilerAl() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        println("****** "+tweetList.size)
+        recycler_view_home.apply {
+            // set a LinearLayoutManager to handle Android
+            // RecyclerView behavior
+            layoutManager = LinearLayoutManager(activity)
+            // set the custom adapter to the RecyclerView
+            adapter = RecyclerAdapter(tweetList)
+        }
+    }
+
+
+    fun verilerAl() :  ArrayList<Tweet>{
         database.collection("Post")
             // .orderBy("tarih", com.google.firebase.firestore.Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
@@ -51,24 +64,20 @@ class HomeFragment : Fragment() {
                             tweetList.clear()
                             for (document in documents) {
                                 val kullanicitext = document.get("kullanicitext") as String
-                                println(kullanicitext)
                                 val gorselurl = document.get("gorselurl") as String
                                 val kullaniciemail = document.get("kullaniciemail") as String
                                 val tarih = document.get("tarih").toString()
                                 val tweet = Tweet(kullanicitext,gorselurl,kullaniciemail,tarih)
                                 tweetList.add(tweet)
                             }
-                            for (twet in tweetList){
-                                println(twet.tweetText)
-                                println(twet.kullaniciemail)
-                                println(twet.gorselurl)
-                                println(twet.tarih)
-                            }
+                            println(tweetList.size)
                             recyclerViewAdapter.notifyDataSetChanged()
                         }
                     }
                 }
             }
+
+        return tweetList
     }
 
 

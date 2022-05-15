@@ -8,7 +8,9 @@ import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.tweets_ticket.view.*
 
 class RecyclerAdapter(val postList :ArrayList<Tweet>) : RecyclerView.Adapter<RecyclerAdapter.PostHolder>(){
-    class PostHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class PostHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostHolder {
         val inflater = LayoutInflater.from(parent.context)

@@ -3,6 +3,7 @@ package com.yusuf.mymecraapp
 import android.Manifest
 import android.app.Activity
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -12,6 +13,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -55,10 +57,9 @@ class AnaSayfa : AppCompatActivity() {
         storage = FirebaseStorage.getInstance()
         auth = FirebaseAuth.getInstance()
         database = FirebaseFirestore.getInstance()
-        setContentView(R.layout.activity_ana_sayfa)
         kullaniciEmail = intent.getStringExtra("email") as String
+        setContentView(R.layout.activity_ana_sayfa)
         replaceFragment(homeFragment)
-
         buttom_nav_bar.setOnItemSelectedListener { id ->
             when (id) {
                 R.id.nav_home -> {
@@ -136,7 +137,6 @@ class AnaSayfa : AppCompatActivity() {
                 Manifest.permission.READ_EXTERNAL_STORAGE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            println(view.toString())
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
@@ -150,7 +150,6 @@ class AnaSayfa : AppCompatActivity() {
     }
 
     fun paylas(view: View) {
-        println("geldi")
         val uuid = UUID.randomUUID()
         val gorselIsim = "${uuid}.jpg"
         val gorselReference = storage.reference.child("images").child(gorselIsim)
@@ -228,7 +227,6 @@ class AnaSayfa : AppCompatActivity() {
                                 if (snapshot != null && snapshot.exists()) {
 
                                 } else {
-                                    println("else")
                                     database.collection("profile").parent
                                 }
 
