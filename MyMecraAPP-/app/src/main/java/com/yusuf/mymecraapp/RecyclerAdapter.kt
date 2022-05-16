@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.tweets_ticket.view.*
 
@@ -21,6 +22,9 @@ class RecyclerAdapter(val postList :ArrayList<Tweet>) : RecyclerView.Adapter<Rec
     override fun onBindViewHolder(holder: PostHolder, position: Int) {
         holder.itemView.txt_tweet.text = postList[position].tweetText
         holder.itemView.txtUserName.text = postList[position].kullaniciemail
+        holder.itemView.txt_tweet_date.text = postList[position].tarih
+        Picasso.get().load(postList[position].gorselurl).into(holder.itemView.tweet_picture)
+
     }
 
     override fun getItemCount(): Int {

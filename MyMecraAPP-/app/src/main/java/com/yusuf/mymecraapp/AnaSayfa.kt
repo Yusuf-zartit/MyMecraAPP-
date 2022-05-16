@@ -127,9 +127,10 @@ class AnaSayfa : AppCompatActivity() {
     }
 
     fun gorselSec(view: View) {
-        if (view.id == 2131230983) {//2131230983    add
+        println(view.toString().get(0))
+        if (view.toString().get(0) == 'a') {// android.    add
             controlImage = true
-        } else if (view.id == 2131231108) {// 2131231108 profile
+        } else if (view.toString().get(0) == 'd') {// da. profile
             controlImage = false
         }
         if (ContextCompat.checkSelfPermission(

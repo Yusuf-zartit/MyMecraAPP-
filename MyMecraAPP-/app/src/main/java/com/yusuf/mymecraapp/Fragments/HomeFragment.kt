@@ -26,7 +26,7 @@ class HomeFragment : Fragment() {
 //    private var adapter: RecyclerView.Adapter<RecyclerAdapter.PostHolder>? = null
     private lateinit var database: FirebaseFirestore
     var tweetList = ArrayList<Tweet>()
-
+    var ilksefer=0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,7 +40,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        println("****** "+tweetList.size)
         recycler_view_home.apply {
             // set a LinearLayoutManager to handle Android
             // RecyclerView behavior
@@ -53,7 +52,7 @@ class HomeFragment : Fragment() {
 
     fun verilerAl() :  ArrayList<Tweet>{
         database.collection("Post")
-            // .orderBy("tarih", com.google.firebase.firestore.Query.Direction.DESCENDING)
+             .orderBy("tarih", com.google.firebase.firestore.Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
                 if (exception != null) {
                     Toast.makeText(fragment_container.context, exception.localizedMessage, Toast.LENGTH_LONG).show()
@@ -70,7 +69,18 @@ class HomeFragment : Fragment() {
                                 val tweet = Tweet(kullanicitext,gorselurl,kullaniciemail,tarih)
                                 tweetList.add(tweet)
                             }
-                            println(tweetList.size)
+                            if(ilksefer===0){
+                                recycler_view_home.apply {
+                                    // set a LinearLayoutManager to handle Android
+                                    // RecyclerView behavior
+                                    layoutManager = LinearLayoutManager(activity)
+                                    // set the custom adapter to the RecyclerView
+                                    adapter = RecyclerAdapter(tweetList)
+                                    ilksefer=1
+                                }
+                                recyclerViewAdapter = RecyclerAdapter(tweetList)
+                            }
+
                             recyclerViewAdapter.notifyDataSetChanged()
                         }
                     }

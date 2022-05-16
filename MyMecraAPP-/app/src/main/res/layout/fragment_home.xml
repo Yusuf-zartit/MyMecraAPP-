@@ -37,12 +37,13 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-        <androidx.recyclerview.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_home"
-            tools:listitem="@layout/tweets_ticket"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/app_bar_layout">
+        android:layout_below="@+id/app_bar_layout"
+        android:layout_marginTop="-1dp"
+        tools:listitem="@layout/tweets_ticket">
 
     </androidx.recyclerview.widget.RecyclerView>
 
